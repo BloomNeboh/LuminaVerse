@@ -3,7 +3,16 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "backend",
-    "frontend"
-  ]
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "install-all": "npm install --workspaces",
+    "build": "npm run build --workspace frontend",
+    "start": "npm run start --workspace backend",
+    "dev": "concurrently \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
 }
