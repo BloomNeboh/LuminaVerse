@@ -10,7 +10,7 @@
     "install-all": "npm install --workspaces",
     "build": "npm run build --workspace frontend",
     "start": "npm run start --workspace backend",
-    "dev": "concurrently \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\""
+    "dev": "concurrently \"npm run dev --workspace backend\" \"npm run start --workspace frontend\""
   },
   "devDependencies": {
     "concurrently": "^8.2.0"
