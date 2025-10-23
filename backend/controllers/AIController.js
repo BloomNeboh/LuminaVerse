@@ -1,1 +1,1 @@
-
+exports.queryUniverse = async (req,res)=>{ res.json({answer:'AI controller placeholder'}); };

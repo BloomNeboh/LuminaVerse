@@ -1,0 +1,1 @@
+exports.upgrade = async (req,res)=>{ res.json({message:'ok'}); };
