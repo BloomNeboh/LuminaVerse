@@ -2,10 +2,7 @@
   "name": "luminarverse",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "frontend",
-    "backend"
-  ],
+  "workspaces": ["frontend","backend"],
   "scripts": {
     "install-all": "npm install --workspaces",
     "build": "npm run build --workspace frontend",
