@@ -1,25 +1,27 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 
-// ---- Dynamic CORS setup ----
-const allowedOrigins = process.env.NODE_ENV === 'production'
-  ? [process.env.FRONTEND_URL]          // deployed frontend
-  : ['http://localhost:5173'];          // local dev
-
+// CORS — allow frontend + local dev
 app.use(cors({
-  origin: allowedOrigins
+  origin: [
+    'http://localhost:5173',
+    'https://luminaverse.herokuapp.com' // Your deployed app URL
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
 }));
 
-app.use(express.json({ limit: '5mb' }));
+app.use(express.json({ limit: '10mb' }));
 
-// Connect to MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+  .then(() => console.log('✅ MongoDB connected'))
+  .catch(err => console.error('❌ Mongo error:', err));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -29,6 +31,11 @@ app.use('/api/tours', require('./routes/tours'));
 app.use('/api/music', require('./routes/music'));
 app.use('/api/projects', require('./routes/projects'));
 
-// Start server
+// Serve frontend (React build)
+app.use(express.static(path.join(__dirname, 'public')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
